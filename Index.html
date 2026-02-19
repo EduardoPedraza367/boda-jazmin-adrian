@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesús Adrián & Jazmín</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#f6f2ee;
+font-family:'Cormorant Garamond', serif;
+overflow:hidden;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+perspective:2000px;
+}
+
+/* FONDO RELIEVE */
+body::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 30%, rgba(255,255,255,0.7) 0%, transparent 40%),
+radial-gradient(circle at 80% 70%, rgba(255,255,255,0.7) 0%, transparent 40%);
+opacity:.6;
+z-index:-1;
+}
+
+/* ESCENA */
+.scene{
+position:relative;
+width:320px;
+height:220px;
+transform-style:preserve-3d;
+transition:transform 2s ease;
+}
+
+/* SOBRE */
+.envelope{
+position:absolute;
+width:100%;
+height:100%;
+background:#d8b38a;
+border-radius:6px;
+box-shadow:0 20px 40px rgba(0,0,0,.2);
+transform-origin:top;
+transition:transform 1.5s ease;
+z-index:2;
+}
+
+/* SOLAPA */
+.flap{
+position:absolute;
+width:100%;
+height:100%;
+background:#c69c6d;
+clip-path:polygon(0 0, 100% 0, 50% 60%);
+transform-origin:top;
+transition:transform 1.5s ease;
+z-index:3;
+}
+
+/* CARTA */
+.card{
+position:absolute;
+width:100%;
+height:420px;
+background:#fffdf9;
+top:-200px;
+border-radius:8px;
+box-shadow:0 30px 60px rgba(0,0,0,.25);
+padding:40px 30px;
+text-align:center;
+transform:translateZ(-200px);
+transition:transform 2s ease, opacity 1.5s ease;
+opacity:0;
+}
+
+/* EFECTO PAPEL RASGADO */
+.card::after{
+content:"";
+position:absolute;
+bottom:-15px;
+left:0;
+width:100%;
+height:30px;
+background:radial-gradient(circle at 10px -10px, transparent 20px, #fffdf9 21px);
+background-size:40px 30px;
+}
+
+/* IMAGEN */
+.card img{
+width:100%;
+border-radius:6px;
+margin-bottom:20px;
+}
+
+/* TEXTO */
+.poetic{
+font-size:18px;
+margin-bottom:25px;
+color:#6d5c54;
+}
+
+.names{
+font-family:'Great Vibes', cursive;
+font-size:48px;
+color:#8c4f39;
+margin-bottom:10px;
+}
+
+.date{
+margin-top:10px;
+font-size:18px;
+letter-spacing:2px;
+}
+
+/* BOTÓN */
+.open-btn{
+margin-top:20px;
+padding:10px 25px;
+border:none;
+background:#8c4f39;
+color:white;
+border-radius:30px;
+cursor:pointer;
+transition:.3s;
+}
+
+.open-btn:hover{
+background:#6d3a28;
+}
+
+/* ANIMACIÓN ACTIVA */
+.scene.open .flap{
+transform:rotateX(-160deg);
+}
+
+.scene.open .card{
+transform:translateZ(150px) translateY(-120px);
+opacity:1;
+}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+.scene{
+width:280px;
+}
+.card{
+height:400px;
+}
+.names{
+font-size:40px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene" id="scene">
+<div class="envelope"></div>
+<div class="flap"></div>
+
+<div class="card">
+<img src="convento.jpg" alt="Convento">
+
+<p class="poetic">
+Con la bendición de Dios y el amor que nos une,<br>
+queremos compartir con ustedes el inicio de nuestra nueva historia.<br><br>
+Acompáñennos a celebrar el día en que nuestros caminos se convierten en uno solo.
+</p>
+
+<div class="names">
+Jesús Adrián<br>y<br>Jazmín
+</div>
+
+<div class="date">
+05 · Diciembre · 2026
+</div>
+
+<button class="open-btn" onclick="enterSite()">Abrir invitación</button>
+
+</div>
+</div>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const scene = document.getElementById("scene");
+const music = document.getElementById("music");
+
+setTimeout(()=>{
+scene.classList.add("open");
+fadeInMusic();
+},1000);
+
+function fadeInMusic(){
+music.volume = 0;
+music.play().catch(()=>{});
+let vol = 0;
+let fade = setInterval(()=>{
+if(vol < 0.6){
+vol += 0.05;
+music.volume = vol;
+}else{
+clearInterval(fade);
+}
+},200);
+}
+
+function enterSite(){
+document.body.style.overflow="auto";
+alert("Aquí conectaremos la invitación completa con cuenta regresiva y confirmación.");
+}
+
+</script>
+
+</body>
+</html>
